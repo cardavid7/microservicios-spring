@@ -1,0 +1,10 @@
+INSERT INTO ms_products (name, price, created_at) VALUES ('Gaming Laptop', 1200, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('Wireless Mouse', 25, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('Mechanical Keyboard', 90, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('27 Inch Monitor', 300, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('USB-C Docking Station', 150, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('External SSD 1TB', 180, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('Noise Cancelling Headphones', 220, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('Webcam HD', 70, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('Bluetooth Speaker', 60, '2026-02-27');
+INSERT INTO ms_products (name, price, created_at) VALUES ('Portable Charger 20000mAh', 45, '2026-02-27');
