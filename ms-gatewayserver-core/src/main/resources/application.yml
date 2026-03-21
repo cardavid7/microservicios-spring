@@ -11,7 +11,7 @@
 #            - Path=/v1/api/product,/v1/api/product/**
 #            filters:
 #            - StripPrefix=1
-#        
+#
 #          - id: ms-item-core
 #            uri: lb://ms-item-core
 #            predicates:
@@ -26,23 +26,23 @@ spring:
       server:
         webflux:
           routes:
-          - id: ms-product-core
-            uri: lb://ms-product-core
-            predicates:
-            - Path=/v1/api/product,/v1/api/product/**
-            - Method=GET,POST #no se habilita el metodo delete en el gateway para product
-            filters:
-            - StripPrefix=1
-        
-          - id: ms-item-core
-            uri: lb://ms-item-core
-            predicates:
-            - Path=/v1/api/item,/v1/api/item/**
-            filters:
-            - StripPrefix=1
-            - AddResponseHeader=X-Response, Blue
-            - AddRequestHeader=X-Request, 1234578
-            - AddRequestParameter=X-Parameter, xyz-123
+            - id: ms-product-core
+              uri: lb://ms-product-core
+              predicates:
+                - Path=/v1/api/product,/v1/api/product/**
+                - Method=GET,POST,PUT #no se habilita el metodo delete en el gateway para product
+              filters:
+                - StripPrefix=1
+
+            - id: ms-item-core
+              uri: lb://ms-item-core
+              predicates:
+                - Path=/v1/api/item,/v1/api/item/**
+              filters:
+                - StripPrefix=1
+                - AddResponseHeader=X-Response, Blue
+                - AddRequestHeader=X-Request, 1234578
+                - AddRequestParameter=X-Parameter, xyz-123
 
 #logging:
 #  level:
