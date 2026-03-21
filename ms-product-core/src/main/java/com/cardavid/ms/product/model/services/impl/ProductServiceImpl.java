@@ -41,26 +41,29 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public Optional<Product> findById(Long id) {
 		Optional<Product> product = productRepository.findById(id);
-		if (product.isPresent()) {
-			product.get().setPort(Integer.parseInt(port));
-		}
-		return productRepository.findById(id);
+		product.ifPresent(p -> p.setPort(Integer.parseInt(port)));
+		return product;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	@Transactional
 	public Product save(Product product) {
+		product.setCreatedAt(LocalDateTime.now());
+		return productRepository.save(product);
+	}
 
-		if (product != null && product.getId() != null) {
-			return productRepository.save(product);
-		} else {
-			Product productNew = new Product();
-			productNew.setCreatedAt(LocalDateTime.now());
-			productNew.setName(product.getName());
-			productNew.setPrice(product.getPrice());
-			return productRepository.save(productNew);
+	@Override
+	@Transactional
+	public Optional<Product> update(Long id, Product product) {
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isEmpty()) {
+			return Optional.empty();
 		}
+		Product productToUpdate = productOptional.get();
+		productToUpdate.setName(product.getName());
+		productToUpdate.setPrice(product.getPrice());
+		// createdAt no se modifica en el update
+		return Optional.of(productRepository.save(productToUpdate));
 	}
 
 	@Override

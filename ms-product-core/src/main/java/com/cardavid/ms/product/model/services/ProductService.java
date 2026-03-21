@@ -8,10 +8,12 @@ import com.cardavid.ms.product.model.entities.Product;
 public interface ProductService {
 
 	List<Product> findAll();
-	
+
 	Optional<Product> findById(Long id);
-	
+
 	Product save(Product product);
-	
+
+	Optional<Product> update(Long id, Product product);
+
 	void delete(long id);
 }

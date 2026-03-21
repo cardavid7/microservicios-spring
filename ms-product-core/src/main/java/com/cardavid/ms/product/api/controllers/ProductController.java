@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,8 +53,6 @@ public class ProductController {
 		if (productOptional.isPresent()) {
 			return ResponseEntity.ok(productOptional.get());
 		}
-		// return ResponseEntity.ok().body(String.format("Product with id %s not found
-		// in database", id));
 		return ResponseEntity.noContent().build();
 	}
 
@@ -60,25 +60,25 @@ public class ProductController {
 	public ResponseEntity<?> save(@Valid @RequestBody ProductParameter productParameter) {
 
 		Product product = new Product();
-
-		if (productParameter.getId() != null) {
-			Optional<Product> productOptional = productService.findById(productParameter.getId());
-
-			if (productOptional.isEmpty()) {
-				// return ResponseEntity.ok().body(String.format("Product with id %s not found
-				// in database", productParameter.getId()));
-				return ResponseEntity.noContent().build();
-			}
-			product.setId(productParameter.getId());
-			product.setCreatedAt(productOptional.get().getCreatedAt());
-		}
-
 		product.setName(productParameter.getName());
 		product.setPrice(productParameter.getPrice());
 
-		product = productService.save(product);
+		return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
+	}
 
-		return ResponseEntity.ok(product);
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@PathVariable Long id,
+			@Valid @RequestBody ProductParameter productParameter) {
+
+		Product product = new Product();
+		product.setName(productParameter.getName());
+		product.setPrice(productParameter.getPrice());
+
+		Optional<Product> productUpdated = productService.update(id, product);
+		if (productUpdated.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(productUpdated.get());
 	}
 
 	@DeleteMapping("/{id}")
@@ -87,10 +87,7 @@ public class ProductController {
 		if (product.isPresent()) {
 			productService.delete(product.get().getId());
 			return ResponseEntity.ok(String.format("Product with id %s was deleted", id));
-		} else {
-			// return ResponseEntity.ok().body(String.format("Product with id %s not found
-			// in database", id));
-			return ResponseEntity.noContent().build();
 		}
+		return ResponseEntity.noContent().build();
 	}
 }
