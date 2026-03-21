@@ -49,7 +49,9 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public Product save(Product product) {
 		product.setCreatedAt(LocalDateTime.now());
-		return productRepository.save(product);
+		Product productSaved = productRepository.save(product);
+		productSaved.setPort(Integer.parseInt(port));
+		return productSaved;
 	}
 
 	@Override
