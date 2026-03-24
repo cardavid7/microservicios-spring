@@ -44,6 +44,13 @@ spring:
                 - AddRequestHeader=X-Request, 1234578
                 - AddRequestParameter=X-Parameter, xyz-123
 
+            - id: ms-security-core
+              uri: lb://ms-security-core
+              predicates:
+                - Path=/v1/api/user,/v1/api/user/**
+              filters:
+                - StripPrefix=1
+
 #logging:
 #  level:
 #    org.springframework.cloud.gateway: DEBUG
