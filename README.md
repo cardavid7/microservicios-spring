@@ -20,12 +20,14 @@ Este repositorio contiene un robusto ecosistema de microservicios basado en la a
 El sistema está compuesto por los siguientes componentes clave, configurados con puertos y parámetros específicos para operar en conjunto:
 
 ### 1. `ms-eurekaserver-core` (Service Registry)
+
 - **Rol:** Servidor de Registro y Descubrimiento (Eureka Server)
 - **Puerto de Ejecución:** `5001`
 - **Versión:** `0.0.1-SNAPSHOT`
 - **Descripción:** Actúa como el directorio central de la arquitectura. Todos los microservicios se registran aquí, permitiendo la resolución de nombres transparente (Location Transparency) sin depender de direcciones IP fijas (ej. enrutamiento a través del nombre `ms-product-core`).
 
 ### 2. `ms-gatewayserver-core` (API Gateway)
+
 - **Rol:** Puerta de enlace API reactiva (Spring Cloud Gateway WebFlux)
 - **Puerto de Ejecución:** `8090`
 - **Versión:** `0.0.1-SNAPSHOT`
@@ -36,14 +38,16 @@ El sistema está compuesto por los siguientes componentes clave, configurados co
 - **Filtros Adicionales (Items):** Inyección de cabeceras en respuesta (`X-Response: Blue`), peticiones (`X-Request: 1234578`) y parámetros de solicitud (`X-Parameter: xyz-123`).
 
 ### 3. `ms-product-core` (Microservicio de Productos)
+
 - **Rol:** Lógica de Negocio y Persistencia (JPA/Hibernate)
 - **Puerto de Ejecución:** `5010`
 - **Base de Datos:** MySQL (Driver: `com.mysql.cj.jdbc.Driver`)
-- **Cadena de conexión:** `jdbc:mysql://localhost/ms_springcloud` (Usuario: `root`)
+- **Cadena de conexión:** `jdbc:mysql://localhost/ms_product_core` (Usuario: `root`)
 - **DDL Automático:** `create-drop` (Ideal para desarrollo, recrea los esquemas cada vez que se levanta)
 - **Descripción:** Maneja las operaciones de la entidad "Product", proveyendo la API REST fundamental y exponiendo conexión a la base de datos relacional MySQL.
 
 ### 4. `ms-item-core` (Microservicio de Items)
+
 - **Rol:** Servicio Consumidor y Tolerancia a Fallos
 - **Puerto de Ejecución:** `5020`
 - **Integraciones:** OpenFeign para clientes HTTP declarativos.
@@ -59,7 +63,7 @@ El sistema está compuesto por los siguientes componentes clave, configurados co
 1. **Java Development Kit (JDK):** Versión recomedada (Java 21).
 2. **Maven:** Para gestión de paquetes.
 3. **IDE Recomendado:** Spring Tool Suite (STS), IntelliJ IDEA, o VS Code con Extension Pack de Java.
-4. **Base de Datos:** Tener un servidor **MySQL** corriendo en puerto por defecto `3306`, con una base de datos creada llamada `ms_springcloud` (credenciales `root` / sin contraseña por defecto, o actualice el archivo `ms-product-core/src/main/resources/application.properties`).
+4. **Base de Datos:** Tener un servidor **MySQL** corriendo en puerto por defecto `3306`, con una base de datos creada llamada `ms_product_core` (credenciales `root` / sin contraseña por defecto, o actualice el archivo `ms-product-core/src/main/resources/application.properties`).
 
 ---
 
